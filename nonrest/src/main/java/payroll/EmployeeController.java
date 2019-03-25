@@ -1,14 +1,11 @@
 package payroll;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.pdfbox.contentstream.PDContentStream;
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.*;
 import org.apache.pdfbox.pdmodel.font.PDFont;
@@ -16,15 +13,10 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
 import org.apache.pdfbox.pdmodel.interactive.form.PDField;
 import org.apache.pdfbox.pdmodel.interactive.form.PDTextField;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.jnlp.FileContents;
 
 @RestController
 class EmployeeController {
@@ -44,7 +36,7 @@ class EmployeeController {
 
 
 	@PostMapping("/generate-pdf")
-	void returnPDf(@RequestBody Map<String, String> fields) throws IOException {
+	String returnPDf(@RequestBody Map<String, String> fields) throws IOException {
 		File file = new File("form.pdf");
 		PDDocument document = PDDocument.load(file);
 		PDAcroForm acroForm = document.getDocumentCatalog().getAcroForm();
@@ -69,13 +61,13 @@ class EmployeeController {
 		}
 		//Saving the document
 
-
 		document.save("my_doc.pdf");
 
 		System.out.println("PDF created");
 
 		//Closing the document
 		document.close();
+		return "hahaha";
 	}
 
 }
